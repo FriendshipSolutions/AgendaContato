@@ -7,13 +7,23 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 public class SearchableActivity extends AppCompatActivity {
+
+    private TextView pesquisaTextView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_searchable);
+
+        pesquisaTextView = (TextView)findViewById(R.id.pesquisaTextView);
+
+
         handleIntent(getIntent());
     }
 
@@ -53,6 +63,8 @@ public class SearchableActivity extends AppCompatActivity {
     private void doSearch(String queryStr) {
         // get a Cursor, prepare the ListAdapter
         // and set it
+
+        pesquisaTextView.setText(queryStr);
     }
 
 }
