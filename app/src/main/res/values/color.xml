@@ -3,5 +3,6 @@
     <color name="azul">#53a7ff</color>
     <color name="vermelho">#ff151f</color>
     <color name="color1">#c76852</color>
-
+    <color name="ColorPrimary">#FF5722</color>
+    <color name="ColorPrimaryDark">#E64A19</color>
 </resources>

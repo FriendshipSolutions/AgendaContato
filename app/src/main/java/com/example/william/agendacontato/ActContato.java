@@ -1,13 +1,15 @@
 package com.example.william.agendacontato;
 
-import android.app.AlertDialog;
+import android.app.SearchManager;
+import android.util.Log;
+import android.widget.*;
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.*;
 import android.view.View.OnClickListener;
-import android.widget.*;
 import android.content.*;
 import android.database.sqlite.*;
 import android.database.*;
@@ -28,8 +30,10 @@ public class ActContato extends AppCompatActivity implements OnClickListener, Ad
     private RepositorioContato repositorioContato;
     private FiltraDados filtraDados;
 
-    public static final String PAR_CONTATO = "CONTATO";
+    private SearchView searchView;
+    private MenuItem menuItem;
 
+    public static final String PAR_CONTATO = "CONTATO";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +47,6 @@ public class ActContato extends AppCompatActivity implements OnClickListener, Ad
         btnAdicionar.setOnClickListener(this);
         lstContatos.setOnItemClickListener(this);
 
-
         try
         {
             objDatabase = new Database(this);
@@ -53,11 +56,8 @@ public class ActContato extends AppCompatActivity implements OnClickListener, Ad
             adpContatos = repositorioContato.buscaContatos(this);
 
             lstContatos.setAdapter(adpContatos);
-
             filtraDados = new FiltraDados(adpContatos);
-
             edtPesquisa.addTextChangedListener(filtraDados);
-
 
         }
         catch (SQLException ex) {
@@ -70,6 +70,37 @@ public class ActContato extends AppCompatActivity implements OnClickListener, Ad
         super.onDestroy();
         if (objCon != null)
             objCon.close();
+    }
+
+    @Override
+    protected void onStop() {
+        Log.d("Teste", "onStop");
+        if (menuItem != null && searchView != null) {
+            if (menuItem.isVisible()) {
+                searchView.setQuery("", false);
+                Log.d("Teste", "CollapseMenuItem");
+            }
+        }
+
+        super.onStop();
+    }
+
+    @Override
+    protected void onStart() {
+        Log.d("Teste", "onStart");
+        super.onStart();
+    }
+
+    @Override
+    protected void onResume() {
+        Log.d("Teste", "onResume");
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        Log.d("Teste", "onPause");
+        super.onPause();
     }
 
     @Override
@@ -96,6 +127,27 @@ public class ActContato extends AppCompatActivity implements OnClickListener, Ad
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_act_contato, menu);
+
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        menuItem = (MenuItem)menu.findItem(R.id.search);
+        menuItem.getActionView();
+        searchView = (SearchView) menuItem.getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setIconifiedByDefault(true);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
+    }
+
     private class FiltraDados implements TextWatcher {
 
         private ArrayAdapter<Contato> arrayAdapter;
@@ -108,7 +160,6 @@ public class ActContato extends AppCompatActivity implements OnClickListener, Ad
         {
             this.arrayAdapter = arrayAdapter;
         }
-
 
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {

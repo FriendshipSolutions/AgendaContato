@@ -7,4 +7,8 @@
     <string name="lblSalvar">Salvar</string>
     <string name="lblAlterar">Alterar</string>
     <string name="lblExcluir">Excluir</string>
+    <string name="app_label">Procurar</string>
+    <string name="search_hint">Digite a pesquisa</string>
+    <string name="title_activity_searchable">SearchableActivity</string>
+    <string name="search_title">Busca</string>
 </resources>

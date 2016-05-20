@@ -3,4 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools" tools:context=".ActContato">
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="100" app:showAsAction="never" />
+    <item
+        android:id="@+id/search"
+        android:icon="@android:drawable/ic_menu_search"
+        android:title="@string/search_title"
+        app:actionViewClass="android.widget.SearchView"
+        app:showAsAction="always"/>
+        <!-- app:showAsAction="always"/> -->
+
 </menu>
